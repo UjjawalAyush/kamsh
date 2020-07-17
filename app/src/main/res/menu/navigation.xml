@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="Home"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/contest"
+        android:icon="@drawable/leaderboard"
+        android:title="Contests"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/posts"
+        android:icon="@drawable/ic_add_circle_outline_black_24dp"
+        android:title="Post"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/notifications"
+        android:icon="@drawable/ic_notifications_black_24dp"
+        android:title="Notifications"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/drafts"
+        android:icon="@drawable/ic_drafts_black_24dp"
+        android:title="Drafts"
+        app:showAsAction="always" />
+</menu>

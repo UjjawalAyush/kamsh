@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="toolbar_color">#C3B3F8</color>
+    <color name="black">#000000</color>
+    <color name="blue">#5973F1</color>
+    <color name="white">#FFFFFF</color>
+    <color name="pink">#E6C4EC</color>
+    <color name="cream">#FFFDD0</color>
+    <color name="red">#FF0000</color>
+    <color name="darkblue">#010AFB</color>
+    <color name="lightgreen">#07F80F</color>
+    <color name="yellow">#DFFF01</color>
+    <color name="orange">#FC4D00</color>
+    <color name="pink1">#FF00C4</color>
+    <color name="purple">#C20BF8</color>
+    <color name="grey">#959090</color>
+    <color name="skyblue">#00FFF6</color>
+    <color name="darkgrey">#6B6766</color>
+    <color name="darkgreen">#2F8A2C</color>
+    <color name="darkpurple">#8D1671</color>
+    <color name="darkred">#B92E2E</color>
+    <color name="navyblue">#09096E</color>
+    <color name="cream1">#F9F9F9</color>
+</resources>
