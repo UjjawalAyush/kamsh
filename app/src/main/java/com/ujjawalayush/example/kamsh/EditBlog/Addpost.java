@@ -758,6 +758,7 @@ public class Addpost extends AppCompatActivity {
                     mLog.setId("Image");
                     mLog.setTitle(TITLE_OF_KEY);
                     mLog.setContent(s);
+                    mLog.setHeight(bitmap.getHeight());
                     myList.add(mLog);
                     arrayList.add(mLog);
                     addPostAdapter.notifyItemInserted(size);

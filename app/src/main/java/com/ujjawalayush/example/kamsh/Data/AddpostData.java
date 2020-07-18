@@ -7,6 +7,7 @@ import android.os.Parcelable;
 public class AddpostData implements Parcelable {
     private String id,content,title;
     private String uri;
+    private long height;
 
     protected AddpostData(Parcel in) {
         id = in.readString();
@@ -26,6 +27,13 @@ public class AddpostData implements Parcelable {
         }
     };
 
+    public long getHeight() {
+        return height;
+    }
+
+    public void setHeight(long height) {
+        this.height = height;
+    }
 
     public AddpostData() {
 

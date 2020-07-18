@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -27,6 +28,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Toolbar toolbar;
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
+    Fragment fragment_home;
+    Fragment fragment;
+    Fragment fragment_drafts,fragment_notification,fragment_contest;
+    FragmentManager fm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,48 +50,40 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         actionBarDrawerToggle.syncState();
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        Fragment fragment=new HomeFragment();
-        FragmentTransaction transaction1 = getSupportFragmentManager().beginTransaction();
-        transaction1.replace(R.id.frame_container, fragment);
-        transaction1.addToBackStack(null);
-        transaction1.commit();
+        fragment_home=new HomeFragment();
+        fragment_drafts=new DraftFragment();
+        fragment_notification=new NotificationFragment();
+        fragment_contest=new ContestFragment();
+        fragment=fragment_home;
+        fm = getSupportFragmentManager();
+        fm.beginTransaction().add(R.id.frame_container,fragment_drafts, "4").hide(fragment_drafts).commit();
+        fm.beginTransaction().add(R.id.frame_container,fragment_notification, "3").hide(fragment_notification).commit();
+        fm.beginTransaction().add(R.id.frame_container,fragment_contest, "2").hide(fragment_contest).commit();
+        fm.beginTransaction().add(R.id.frame_container,fragment_home, "1").commit();
     }
     public BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener=new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-            Fragment fragment;
             switch(menuItem.getItemId()){
                 case R.id.home:
-                    fragment=new HomeFragment();
-                    FragmentTransaction transaction1 = getSupportFragmentManager().beginTransaction();
-                    transaction1.replace(R.id.frame_container, fragment);
-                    transaction1.addToBackStack(null);
-                    transaction1.commit();
+                    fm.beginTransaction().hide(fragment).show(fragment_home).commit();
+                    fragment = fragment_home;
                     return true;
                 case R.id.posts:
                     Intent data=new Intent(MainActivity.this,Addpost.class);
                     startActivity(data);
                     return true;
                 case R.id.notifications:
-                    fragment=new NotificationFragment();
-                    FragmentTransaction transaction3 = getSupportFragmentManager().beginTransaction();
-                    transaction3.replace(R.id.frame_container, fragment);
-                    transaction3.addToBackStack(null);
-                    transaction3.commit();
+                    fm.beginTransaction().hide(fragment).show(fragment_notification).commit();
+                    fragment = fragment_notification;
                     return true;
                 case R.id.drafts:
-                    fragment=new DraftFragment();
-                    FragmentTransaction transaction4 = getSupportFragmentManager().beginTransaction();
-                    transaction4.replace(R.id.frame_container, fragment);
-                    transaction4.addToBackStack(null);
-                    transaction4.commit();
+                    fm.beginTransaction().hide(fragment).show(fragment_drafts).commit();
+                    fragment = fragment_drafts;
                     return true;
                 case R.id.contest:
-                    fragment=new ContestFragment();
-                    FragmentTransaction transaction5 = getSupportFragmentManager().beginTransaction();
-                    transaction5.replace(R.id.frame_container, fragment);
-                    transaction5.addToBackStack(null);
-                    transaction5.commit();
+                    fm.beginTransaction().hide(fragment).show(fragment_contest).commit();
+                    fragment = fragment_contest;
                     return true;
             }
             return false;
