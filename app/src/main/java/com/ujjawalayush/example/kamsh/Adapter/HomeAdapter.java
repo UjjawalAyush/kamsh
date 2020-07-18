@@ -29,6 +29,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.RecyclerItemVi
     }
     public interface OnItemClickListener{
         void onViewClick(int position);
+        void onUpClick(int position);
+        void onDownClick(int position);
     }
     public void setOnItemClickListener(OnItemClickListener Listener){
         mListener=Listener;
@@ -72,6 +74,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.RecyclerItemVi
         holder.arrayList.add(0,mLog);
         holder.mAdapter = new ViewHomePostAdapter(holder.arrayList);
         holder.recyclerView.setAdapter(holder.mAdapter);
+        holder.rating.setText(Long.toString(myList.get(pos).getRating()));
     }
 
     @Override
@@ -81,18 +84,32 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.RecyclerItemVi
 
     public class RecyclerItemViewHolder extends RecyclerView.ViewHolder{
         ImageView view;
-        TextView title;
+        TextView title,rating;
         RecyclerView recyclerView;
         ArrayList<AddpostData> arrayList=new ArrayList<>();
         LinearLayoutManager linearLayoutManager;
         ViewHomePostAdapter mAdapter;
-
-        ImageButton rate;
+        ImageButton up,down;
         public RecyclerItemViewHolder(final View parent, final OnItemClickListener listener) {
             super(parent);
             title=(TextView)parent.findViewById(R.id.text);
             recyclerView=(RecyclerView)parent.findViewById(R.id.recyclerView);
+            up=(ImageButton)parent.findViewById(R.id.up);
+            down=(ImageButton)parent.findViewById(R.id.down);
+            rating=(TextView)parent.findViewById(R.id.text1);
             linearLayoutManager=new LinearLayoutManager(parent.getContext());
+            up.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onUpClick(getAdapterPosition());
+                }
+            });
+            down.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onDownClick(getAdapterPosition());
+                }
+            });
         }
     }
 }

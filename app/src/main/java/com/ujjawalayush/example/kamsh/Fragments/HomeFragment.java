@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -55,9 +56,11 @@ public class HomeFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         homeAdapter = new HomeAdapter(arrayList);
         recyclerView.setAdapter(homeAdapter);
-        databaseReference.child("Posts").orderByChild("time").addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("Posts").orderByChild("time").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                arrayList.clear();
+                homeAdapter.notifyDataSetChanged();
                 for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()) {
                     pos=arrayList.size();
                     arrayList.add(create_postData(dataSnapshot1));
@@ -70,9 +73,85 @@ public class HomeFragment extends Fragment {
 
             }
         });
+        CallListener();
         return home;
     }
+    void CallListener(){
+        homeAdapter.setOnItemClickListener(new HomeAdapter.OnItemClickListener() {
+            @Override
+            public void onViewClick(int position) {
 
+            }
+
+            @Override
+            public void onUpClick(final int position) {
+                if(user==null){
+                    Toast.makeText(context,"Sign In First!!",Toast.LENGTH_LONG).show();
+                    return;
+                }
+                DatabaseReference databaseReference1=databaseReference.child("Rating").child(arrayList.get(position).getKey());
+                databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        int t=0;
+                        for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+                            if(dataSnapshot1.getValue() == user.getUid())
+                                t=1;
+                        }
+                        if(t==0){
+                            Long rating=arrayList.get(position).getRating();
+                            DatabaseReference databaseReference2=databaseReference.child("Posts").child(arrayList.get(position).getKey());
+                            databaseReference2.child("rating").setValue(rating+1);
+                            databaseReference2=databaseReference.child("Rating").child(arrayList.get(position).getKey());
+                            databaseReference2.push().setValue(user.getUid());
+                        }
+                        else{
+                            Toast.makeText(context,"Sorry You have already voted!!",Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onDownClick(final int position) {
+                if(user==null){
+                    Toast.makeText(context,"Sign In First!!",Toast.LENGTH_LONG).show();
+                    return;
+                }
+                DatabaseReference databaseReference1=databaseReference.child("Rating").child(arrayList.get(position).getKey());
+                databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        int t=0;
+                        for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+                            if(dataSnapshot1.getValue() == user.getUid())
+                                t=1;
+                        }
+                        if(t==0){
+                            Long rating=arrayList.get(position).getRating();
+                            DatabaseReference databaseReference2=databaseReference.child("Posts").child(arrayList.get(position).getKey());
+                            databaseReference2.child("rating").setValue(rating-1);
+                            databaseReference2=databaseReference.child("Rating").child(arrayList.get(position).getKey());
+                            databaseReference2.push().setValue(user.getUid());
+                        }
+                        else{
+                            Toast.makeText(context,"Sorry You have already voted!!",Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
+        });
+    }
     private PostData create_postData(DataSnapshot dataSnapshot1) {
         PostData mLog= new PostData();
         if(dataSnapshot1.hasChild("title"))
@@ -81,6 +160,9 @@ public class HomeFragment extends Fragment {
             mLog.setAuthor((String) dataSnapshot1.child("author").getValue());
         if(dataSnapshot1.hasChild("photo"))
             mLog.setPhoto((String) dataSnapshot1.child("photo").getValue());
+        if(dataSnapshot1.hasChild("rating"))
+        mLog.setRating((Long)dataSnapshot1.child("rating").getValue());
+        mLog.setKey(dataSnapshot1.getKey());
         ArrayList<AddpostData> myList=new ArrayList<>();
         if(dataSnapshot1.hasChild("myList")){
             for(DataSnapshot snapshot:dataSnapshot1.child("myList").getChildren()){

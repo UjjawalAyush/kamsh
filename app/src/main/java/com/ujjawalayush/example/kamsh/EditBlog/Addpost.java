@@ -471,6 +471,7 @@ public class Addpost extends AppCompatActivity {
                 title="NO TITLE";
             mLog.setTitle(title);
             mLog.setAuthor("Anonymous");
+            mLog.setRating((long) 0);
             mLog.setPhoto("");
             mLog.setMyList(myList);
             mLog.setTime(-System.currentTimeMillis());
@@ -486,7 +487,6 @@ public class Addpost extends AppCompatActivity {
                     Toast.makeText(Addpost.this, "Upload Failed", Toast.LENGTH_LONG).show();
                 }
             });
-
         }
         else {
             for (int i = 0; i < myList.size(); i++) {
@@ -512,6 +512,7 @@ public class Addpost extends AppCompatActivity {
                                         mLog.setPhoto("");
                                         mLog.setTitle(title);
                                         mLog.setMyList(myList);
+                                        mLog.setRating((long) 0);
                                         mLog.setTime(-System.currentTimeMillis());
                                         DatabaseReference databaseReference1 = databaseReference.child("Posts").push();
                                         databaseReference1.setValue(mLog).addOnSuccessListener(new OnSuccessListener<Void>() {

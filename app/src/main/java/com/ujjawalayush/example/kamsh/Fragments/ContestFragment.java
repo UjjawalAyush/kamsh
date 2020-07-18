@@ -18,7 +18,7 @@ public class ContestFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        home =inflater.inflate(R.layout.fragment_home, container, false);
+        home =inflater.inflate(R.layout.fragment_contest, container, false);
         return home;
     }
 }

@@ -6,19 +6,27 @@ import java.util.ArrayList;
 
 public class PostData {
     private ArrayList<AddpostData> myList=new ArrayList<>();
-    private String title,author,photo;
-    private Long time;
+    private String title,author,photo,key;
+    private Long rating,time;
 
-    public String getTitle() {
-        return title;
+    public Long getTime() {
+        return time;
     }
 
     public void setTime(Long time) {
         this.time = time;
     }
 
-    public Long getTime() {
-        return time;
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     public void setTitle(String title) {
@@ -38,6 +46,14 @@ public class PostData {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public Long getRating() {
+        return rating;
+    }
+
+    public void setRating(Long rating) {
+        this.rating = rating;
     }
 
     public String getPhoto() {
