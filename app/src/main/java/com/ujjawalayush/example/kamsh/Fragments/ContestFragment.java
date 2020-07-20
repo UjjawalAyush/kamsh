@@ -8,8 +8,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import com.ujjawalayush.example.kamsh.R;
+
+import java.util.ArrayList;
 
 public class ContestFragment extends Fragment {
     public ContestFragment() {
@@ -17,6 +21,7 @@ public class ContestFragment extends Fragment {
     }
     View home;
     RecyclerView my,future,past,active;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

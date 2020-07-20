@@ -106,4 +106,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         return super.onOptionsItemSelected(item);
     }
+    public void onClick(View v){
+        Intent data=new Intent(MainActivity.this,Host.class);
+        startActivity(data);
+    }
+    public void onClick1(View v){
+
+    }
 }

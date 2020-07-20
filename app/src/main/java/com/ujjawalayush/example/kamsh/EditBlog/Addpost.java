@@ -9,6 +9,8 @@ import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
@@ -431,7 +433,18 @@ public class Addpost extends AppCompatActivity {
         }
         return ans.toString();
     }
-
+    public boolean isNetwork() {
+        try {
+            NetworkInfo networkInfo = null;
+            ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            if (connectivityManager != null) {
+                networkInfo = connectivityManager.getActiveNetworkInfo();
+            }
+            return networkInfo != null && networkInfo.isConnected();
+        } catch (NullPointerException e) {
+            return false;
+        }
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId()==R.id.save){
@@ -439,20 +452,25 @@ public class Addpost extends AppCompatActivity {
             insertion.execute();
         }
         else if(item.getItemId()==R.id.Upload){
-            AlertDialog.Builder builder = new AlertDialog.Builder(Addpost.this, R.style.Theme_AppCompat_DayNight_Dialog);
-            builder.setTitle("Do you wanna go anonymous ?");
-            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    addAnonymously();
-                }
-            });
-            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                }
-            });
-            builder.show();
+            if(!isNetwork()){
+                Toast.makeText(Addpost.this,"Please Check Network Connectivity",Toast.LENGTH_LONG).show();
+            }
+            else {
+                AlertDialog.Builder builder = new AlertDialog.Builder(Addpost.this, R.style.Theme_AppCompat_DayNight_Dialog);
+                builder.setTitle("Do you wanna go anonymous ?");
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        addAnonymously();
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+                builder.show();
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -843,8 +861,6 @@ public class Addpost extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent data=new Intent(Addpost.this,MainActivity.class);
-        startActivity(data);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

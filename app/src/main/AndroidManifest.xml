@@ -54,6 +54,13 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".Host">
+            <intent-filter>
+                <action android:name="com.ujjawalayush.example.kamsh.host" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
