@@ -1,6 +1,7 @@
 package com.ujjawalayush.example.kamsh.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,9 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -22,14 +20,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.ujjawalayush.example.kamsh.Adapter.ContestAdapter;
-import com.ujjawalayush.example.kamsh.Adapter.HomeAdapter;
+import com.ujjawalayush.example.kamsh.ContestFeatures.Contest;
+import com.ujjawalayush.example.kamsh.ContestFeatures.MyContest;
 import com.ujjawalayush.example.kamsh.FirebaseData.ContestData;
 import com.ujjawalayush.example.kamsh.R;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 public class ContestFragment extends Fragment {
@@ -130,8 +128,54 @@ public class ContestFragment extends Fragment {
 
             }
         });
+        CallListener();
         return home;
     }
+
+    private void CallListener() {
+        myContest.setOnItemClickListener(new ContestAdapter.OnItemClickListener() {
+            @Override
+            public void onViewClick(int position) {
+                Intent data =new Intent(context,MyContest.class);
+                data.putExtra("Name",myList.get(position).getName());
+                startActivity(data);
+            }
+        });
+        pastContest.setOnItemClickListener(new ContestAdapter.OnItemClickListener() {
+            @Override
+            public void onViewClick(int position) {
+                Intent data =new Intent(context,Contest.class);
+                Bundle extras=new Bundle();
+                extras.putString("Type","1");
+                extras.putString("Name",pastList.get(position).getName());
+                data.putExtra("extras",extras);
+                startActivity(data);
+            }
+        });
+        futureContest.setOnItemClickListener(new ContestAdapter.OnItemClickListener() {
+            @Override
+            public void onViewClick(int position) {
+                Intent data =new Intent(context,Contest.class);
+                Bundle extras=new Bundle();
+                extras.putString("Type","3");
+                extras.putString("Name",futureList.get(position).getName());
+                data.putExtra("extras",extras);
+                startActivity(data);
+            }
+        });
+        activeContest.setOnItemClickListener(new ContestAdapter.OnItemClickListener() {
+            @Override
+            public void onViewClick(int position) {
+                Intent data =new Intent(context,Contest.class);
+                Bundle extras=new Bundle();
+                extras.putString("Type","2");
+                extras.putString("Name",activeList.get(position).getName());
+                data.putExtra("extras",extras);
+                startActivity(data);
+            }
+        });
+    }
+
     private Long convert_to_milli(String startdate, String starttime) throws ParseException {
         Long ans=(long)0;
         starttime+=":00";
