@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:id="@+id/relativeLayout"
+    android:background="@color/blue"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/dummy3"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="15dp"
+        android:gravity="start"
+        android:textColor="@color/black"
+        android:textSize="13sp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/start_date"
+        android:layout_marginStart="-10dp"
+        android:id="@+id/dummy3"/>
+    <TextView
+        android:layout_width="80dp"
+        android:id="@+id/start_date"
+        android:layout_marginEnd="100dp"
+        android:layout_centerHorizontal="true"
+        android:text="hh/mm/yyyy"
+        android:layout_marginTop="5dp"
+        android:textSize="13sp"
+        android:textColor="@color/black"
+        android:layout_alignParentEnd="true"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/start_date"
+        android:layout_marginBottom="-20dp"
+        android:id="@+id/dummy2"/>
+    <TextView
+        android:layout_width="80dp"
+        android:id="@+id/start_time"
+        android:layout_centerHorizontal="true"
+        android:text="hh:mm"
+        android:layout_marginEnd="100dp"
+        android:textSize="13sp"
+        android:layout_alignTop="@+id/dummy2"
+        android:layout_marginTop="0dp"
+        android:layout_centerVertical="true"
+        android:textColor="@color/black"
+        android:layout_alignParentEnd="true"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_width="80dp"
+        android:id="@+id/end_date"
+        android:layout_marginEnd="10dp"
+        android:layout_centerHorizontal="true"
+        android:text="hh/mm/yyyy"
+        android:layout_marginTop="5dp"
+        android:textSize="13sp"
+        android:textColor="@color/black"
+        android:layout_alignParentEnd="true"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/end_date"
+        android:layout_marginBottom="-20dp"
+        android:id="@+id/dummy1"/>
+    <TextView
+        android:layout_width="80dp"
+        android:id="@+id/end_time"
+        android:layout_centerHorizontal="true"
+        android:text="hh:mm"
+        android:layout_marginEnd="10dp"
+        android:textSize="13sp"
+        android:layout_alignTop="@+id/dummy1"
+        android:layout_marginTop="0dp"
+        android:layout_centerVertical="true"
+        android:textColor="@color/black"
+        android:layout_alignParentEnd="true"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dummy4"
+        android:layout_alignBottom="@id/name"
+        android:layout_marginBottom="-15dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignBottom="@id/dummy4"
+        android:layout_marginBottom="0dp"
+        android:background="@color/navyblue"/>
+</RelativeLayout>

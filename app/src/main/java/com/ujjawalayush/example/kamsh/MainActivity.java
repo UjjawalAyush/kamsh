@@ -6,7 +6,6 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.ujjawalayush.example.kamsh.ContestFeatures.Host;
 import com.ujjawalayush.example.kamsh.EditBlog.Addpost;
 import com.ujjawalayush.example.kamsh.Fragments.ContestFragment;
 import com.ujjawalayush.example.kamsh.Fragments.DraftFragment;

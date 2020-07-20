@@ -2,7 +2,15 @@ package com.ujjawalayush.example.kamsh.FirebaseData;
 
 public class ContestData {
     private String startdate,starttime,enddate,endtime,description,prizes,name,type;
-    private String uri;
+    private String uri,user;
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
 
     public String getName() {
         return name;

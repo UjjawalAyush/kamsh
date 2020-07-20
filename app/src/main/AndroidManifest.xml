@@ -54,7 +54,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".Host">
+        <activity android:name=".ContestFeatures.Host">
             <intent-filter>
                 <action android:name="com.ujjawalayush.example.kamsh.host" />
 

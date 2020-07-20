@@ -281,13 +281,13 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="-20dp"
         android:id="@+id/dummy7"
-        android:layout_alignBottom="@+id/view2"/>
+        android:layout_alignBottom="@+id/view4"/>
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/recyclerView3"
         android:layout_marginStart="3dp"
-        android:layout_alignTop="@+id/dummy3"
+        android:layout_alignTop="@+id/dummy7"
         android:layout_marginEnd="3dp">
     </android.support.v7.widget.RecyclerView>
     <com.github.clans.fab.FloatingActionMenu

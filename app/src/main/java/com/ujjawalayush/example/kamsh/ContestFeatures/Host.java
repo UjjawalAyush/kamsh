@@ -1,4 +1,4 @@
-package com.ujjawalayush.example.kamsh;
+package com.ujjawalayush.example.kamsh.ContestFeatures;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -40,6 +40,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import com.ujjawalayush.example.kamsh.FirebaseData.ContestData;
+import com.ujjawalayush.example.kamsh.R;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -162,6 +163,8 @@ public class Host extends AppCompatActivity {
             if(!isNetwork()){
                 Toast.makeText(Host.this,"Please Check Network Connectivity",Toast.LENGTH_LONG).show();
             }
+            else if(user==null)
+                Toast.makeText(Host.this,"Log In First!!",Toast.LENGTH_LONG).show();
             else
                 insert();
         }
@@ -222,6 +225,8 @@ public class Host extends AppCompatActivity {
                         mLog.setEnddate(enddate);
                         mLog.setEndtime(endtime);
                         mLog.setPrizes(p);
+                        mLog.setUri("");
+                        mLog.setUser(user.getUid());
                         mLog.setStarttime(starttime);
                         mLog.setStartdate(startdate);
                         mLog.setName(contest_name);
@@ -245,6 +250,7 @@ public class Host extends AppCompatActivity {
                                         mLog.setEndtime(endtime);
                                         mLog.setPrizes(p);
                                         mLog.setStarttime(starttime);
+                                        mLog.setUser(user.getUid());
                                         mLog.setStartdate(startdate);
                                         mLog.setName(contest_name);
                                         mLog.setUri(uri.toString());
