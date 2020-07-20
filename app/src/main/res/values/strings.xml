@@ -2,4 +2,10 @@
     <string name="app_name">kamsh</string>
     <string name="open">open</string>
     <string name="close">close</string>
+    <string name="my_contests">My Contests</string>
+    <string name="name">NAME</string>
+    <string name="start">START</string>
+    <string name="end">END</string>
+    <string name="future_contests">Future Contests</string>
+    <string name="active_contests">Active Contests</string>
 </resources>
