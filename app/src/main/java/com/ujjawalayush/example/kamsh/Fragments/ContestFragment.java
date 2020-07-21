@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -99,7 +100,7 @@ public class ContestFragment extends Fragment {
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
-                    if(user!=null&&dataSnapshot1.child("user").toString().equals(user.getUid())){
+                    if(user!=null&&dataSnapshot1.child("user").getValue().toString().equals(user.getUid())){
                         int pos=myList.size();
                         myList.add(mLog);
                         myContest.notifyItemChanged(pos);

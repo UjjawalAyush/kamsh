@@ -13,7 +13,7 @@
     <color name="darkblue">#010AFB</color>
     <color name="lightgreen">#07F80F</color>
     <color name="yellow">#DFFF01</color>
-    <color name="orange">#FC4D00</color>
+    <color name="orange">#FFA500</color>
     <color name="pink1">#FF00C4</color>
     <color name="purple">#C20BF8</color>
     <color name="grey">#959090</color>
@@ -21,6 +21,7 @@
     <color name="skyblue">#00FFF6</color>
     <color name="darkgrey">#6B6766</color>
     <color name="darkgreen">#2F8A2C</color>
+    <color name="signup">#7199C7</color>
     <color name="darkpurple">#8D1671</color>
     <color name="darkred">#B92E2E</color>
     <color name="navyblue">#09096E</color>

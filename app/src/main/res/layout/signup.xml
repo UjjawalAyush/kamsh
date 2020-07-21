@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_marginTop="50dp"
+        android:background="@color/signup"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.mikhaellopez.circularimageview.CircularImageView
+                android:id="@+id/circularImageView"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_alignParentTop="false"
+                android:layout_marginTop="10dp"
+                app:civ_border_color="#EEEEEE"
+                app:civ_border_width="4dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="55dp"
+                android:src="@drawable/persongood" />
+
+            <ImageButton
+                android:id="@+id/imageButton1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignTop="@+id/circularImageView"
+                android:layout_alignEnd="@id/circularImageView"
+                android:layout_alignParentTop="false"
+                android:layout_alignParentEnd="false"
+                android:layout_marginTop="60dp"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/border2"
+                android:onClick="onClick"
+                app:srcCompat="@drawable/ic_add_a_photo_black_24dp"
+                tools:layout_editor_absoluteX="172dp"
+                tools:layout_editor_absoluteY="111dp" />
+            <com.github.florent37.materialtextfield.MaterialTextField
+                android:id="@+id/m1"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_marginEnd="30dp"
+                app:mtf_cardCollapsedHeight="4dp"
+                app:mtf_image="@drawable/ic_email_black_24dp"
+                android:ems="10"
+                android:layout_alignTop="@id/circularImageView"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="120dp"
+                app:mtf_labelColor="#FFFFFF">
+
+                <EditText
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:hint="Enter Email Id"
+                    android:textColorHint="@color/black"
+                    android:inputType="text"
+                    android:textSize="15sp" />
+
+            </com.github.florent37.materialtextfield.MaterialTextField>
+            <com.github.florent37.materialtextfield.MaterialTextField
+                android:id="@+id/m2"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_marginEnd="30dp"
+                app:mtf_cardCollapsedHeight="4dp"
+                app:mtf_image="@drawable/ic_title_black_24dp"
+                android:ems="10"
+                android:layout_marginStart="30dp"
+                android:layout_alignTop="@id/m1"
+                android:layout_marginTop="85dp"
+                app:mtf_labelColor="#FFFFFF">
+
+                <EditText
+                    android:id="@+id/password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:textColor="@color/black"
+                    android:hint="Enter Password"
+                    android:textColorHint="@color/black"
+                    android:textSize="15sp" />
+
+            </com.github.florent37.materialtextfield.MaterialTextField>
+            <com.github.florent37.materialtextfield.MaterialTextField
+                android:id="@+id/m3"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_marginEnd="30dp"
+                app:mtf_cardCollapsedHeight="4dp"
+                app:mtf_image="@drawable/ic_person_black_24dp"
+                android:ems="10"
+                android:layout_marginStart="30dp"
+                android:layout_alignTop="@id/m2"
+                android:layout_marginTop="85dp"
+                app:mtf_labelColor="#FFFFFF">
+
+                <EditText
+                    android:id="@+id/username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:textColor="@color/black"
+                    android:hint="Enter Username"
+                    android:textColorHint="@color/black"
+                    android:textSize="15sp" />
+
+            </com.github.florent37.materialtextfield.MaterialTextField>
+            <com.github.florent37.materialtextfield.MaterialTextField
+                android:id="@+id/m4"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_marginEnd="30dp"
+                app:mtf_cardCollapsedHeight="4dp"
+                app:mtf_image="@drawable/ic_phone_android_black_24dp"
+                android:ems="10"
+                android:layout_marginStart="30dp"
+                android:layout_alignTop="@id/m3"
+                android:layout_marginTop="85dp"
+                app:mtf_labelColor="#FFFFFF">
+
+                <EditText
+                    android:id="@+id/phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:textColor="@color/black"
+                    android:hint="Enter Phone Number"
+                    android:textColorHint="@color/black"
+                    android:textSize="15sp" />
+
+            </com.github.florent37.materialtextfield.MaterialTextField>
+            <TextView
+                android:layout_width="wrap_content"
+                android:id="@+id/dummy"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/m4"
+                android:layout_marginBottom="0dp"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/dummy"
+                android:text="Send Email Verification"
+                android:background="@drawable/addpost_button"
+                android:layout_marginStart="30dp"
+                android:onClick="onClick2"
+                android:id="@+id/login"
+                android:layout_marginTop="50dp"
+                android:layout_marginEnd="30dp" />
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

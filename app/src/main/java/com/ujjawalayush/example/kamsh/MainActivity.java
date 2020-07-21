@@ -14,8 +14,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.ujjawalayush.example.kamsh.Authentication.LogIn;
 import com.ujjawalayush.example.kamsh.ContestFeatures.Host;
 import com.ujjawalayush.example.kamsh.EditBlog.Addpost;
 import com.ujjawalayush.example.kamsh.Fragments.ContestFragment;
@@ -23,18 +27,25 @@ import com.ujjawalayush.example.kamsh.Fragments.DraftFragment;
 import com.ujjawalayush.example.kamsh.Fragments.HomeFragment;
 import com.ujjawalayush.example.kamsh.Fragments.NotificationFragment;
 
+import static android.view.View.GONE;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     NavigationView navigationView;
     Toolbar toolbar;
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     Fragment fragment_home;
+    FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
     Fragment fragment_drafts,fragment_notification,fragment_contest;
     FragmentManager fm;
+    Button sign;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        sign=(Button)findViewById(R.id.sign_in);
+        if(user!=null)
+            sign.setVisibility(GONE);
         toolbar=(Toolbar)findViewById(R.id.toolbar);
         toolbar.setTitle("KAMSH");
         setSupportActionBar(toolbar);
@@ -107,5 +118,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     public void onClick1(View v){
 
+    }
+    public void onClick2(View v){
+        Intent data=new Intent(MainActivity.this,LogIn.class);
+        startActivity(data);
     }
 }

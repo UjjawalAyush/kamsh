@@ -19,6 +19,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Authentication.LogIn">
+            <intent-filter>
+                <action android:name="com.ujjawalayush.example.kamsh.login" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Authentication.SignUp">
+            <intent-filter>
+                <action android:name="com.ujjawalayush.example.kamsh.signup" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity android:name=".EditBlog.Addpost">
             <intent-filter>
                 <action android:name="com.ujjawalayush.example.kamsh.addpost" />

@@ -25,6 +25,7 @@
         android:background="@color/toolbar_color"
         android:textColor="@color/white"
         android:text="SIGN IN"
+        android:onClick="onClick2"
         android:textSize="18sp"
         android:id="@+id/sign_in"
         android:layout_gravity="top|right"

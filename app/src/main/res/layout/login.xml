@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/login"
+    android:layout_height="match_parent">
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp"
+        android:textColor="@color/colorPrimaryDark" />
+    <com.github.florent37.materialtextfield.MaterialTextField
+        android:id="@+id/m1"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginEnd="30dp"
+        app:mtf_cardCollapsedHeight="4dp"
+        app:mtf_image="@drawable/ic_email_black_24dp"
+        android:ems="10"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="160dp"
+        app:mtf_labelColor="#FFFFFF">
+
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:hint="Enter Email Id"
+            android:textColorHint="@color/black"
+            android:inputType="text"
+            android:textSize="15sp" />
+
+    </com.github.florent37.materialtextfield.MaterialTextField>
+    <com.github.florent37.materialtextfield.MaterialTextField
+        android:id="@+id/m2"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginEnd="30dp"
+        app:mtf_cardCollapsedHeight="4dp"
+        app:mtf_image="@drawable/ic_title_black_24dp"
+        android:ems="10"
+        android:layout_marginStart="30dp"
+        android:layout_alignTop="@id/m1"
+        android:layout_marginTop="85dp"
+        app:mtf_labelColor="#FFFFFF">
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textColor="@color/black"
+            android:hint="Enter Password"
+            android:textColorHint="@color/black"
+            android:textSize="15sp" />
+
+    </com.github.florent37.materialtextfield.MaterialTextField>
+    <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/dummy"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/m2"
+        android:layout_marginBottom="0dp"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/dummy"
+        android:text="LOG IN"
+        android:background="@drawable/addpost_button"
+        android:layout_marginStart="30dp"
+        android:id="@+id/login"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="30dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="30dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/forgot"
+        android:onClick="onClick"
+        android:textColor="@color/black"
+        android:layout_alignBottom="@+id/login"
+        android:layout_marginBottom="-30dp"
+        android:text="@string/forgot_password"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="30dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/signup"
+        android:textColor="@color/black"
+        android:onClick="onClick1"
+        android:layout_marginBottom="30dp"
+        android:text="@string/new_user_sign_up_here"/>
+</RelativeLayout>
