@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.ujjawalayush.example.kamsh.EditBlog.Addpost;
 import com.ujjawalayush.example.kamsh.MainActivity;
@@ -22,6 +23,7 @@ import com.ujjawalayush.example.kamsh.R;
 
 public class Contest extends AppCompatActivity {
     Toolbar toolbar;
+    Bundle extras;
     Fragment fragment_home;
     Fragment fragment;
     Fragment fragment_contest;
@@ -31,7 +33,7 @@ public class Contest extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.contests);
-        Bundle extras=getIntent().getBundleExtra("extras");
+        extras=getIntent().getBundleExtra("extras");
         toolbar=(Toolbar)findViewById(R.id.toolbar);
         toolbar.setTitle(extras.getString("Name"));
         name=extras.getString("Name");
@@ -64,9 +66,15 @@ public class Contest extends AppCompatActivity {
                     fm.beginTransaction().hide(fragment_contest).show(fragment_home).commit();
                     return true;
                 case R.id.posts:
-                    Intent data=new Intent(Contest.this,AddNewpost.class);
-                    data.putExtra("Name",name);
-                    startActivity(data);
+                    if(extras.getString("Type").equals("2")) {
+                        Intent data = new Intent(Contest.this, AddNewpost.class);
+                        data.putExtra("Name", name);
+                        startActivity(data);
+                    }
+                    else if(extras.getString("Type").equals("1"))
+                        Toast.makeText(Contest.this,"Sorry!! Contest Over !!",Toast.LENGTH_LONG).show();
+                    else
+                        Toast.makeText(Contest.this,"Contest is yet to start!!",Toast.LENGTH_LONG).show();
                     return true;
                 case R.id.leaderboard:
                     fm.beginTransaction().hide(fragment_home).show(fragment_contest).commit();
