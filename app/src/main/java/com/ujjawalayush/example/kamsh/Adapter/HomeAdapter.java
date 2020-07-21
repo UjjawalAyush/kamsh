@@ -11,7 +11,9 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
 import com.ujjawalayush.example.kamsh.Data.AddpostData;
 import com.ujjawalayush.example.kamsh.FirebaseData.PostData;
 import com.ujjawalayush.example.kamsh.R;
@@ -71,6 +73,9 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.RecyclerItemVi
         AddpostData mLog=new AddpostData();
         mLog.setId("TITLE");
         mLog.setContent(myList.get(pos).getTitle());
+        if(!myList.get(pos).getPhoto().equals("")){
+            Picasso.get().load(myList.get(pos).getPhoto()).fit().into(holder.view);
+        }
         holder.arrayList.add(0,mLog);
         holder.mAdapter = new ViewHomePostAdapter(holder.arrayList);
         holder.recyclerView.setAdapter(holder.mAdapter);
@@ -96,6 +101,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.RecyclerItemVi
             recyclerView=(RecyclerView)parent.findViewById(R.id.recyclerView);
             up=(ImageButton)parent.findViewById(R.id.up);
             down=(ImageButton)parent.findViewById(R.id.down);
+            view=(ImageView)parent.findViewById(R.id.imageView);
             rating=(TextView)parent.findViewById(R.id.text1);
             linearLayoutManager=new LinearLayoutManager(parent.getContext());
             up.setOnClickListener(new View.OnClickListener() {

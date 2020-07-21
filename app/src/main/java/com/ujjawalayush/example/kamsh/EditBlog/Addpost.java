@@ -480,15 +480,24 @@ public class Addpost extends AppCompatActivity {
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if(t111==1)
-                            addAnonymously_Contest();
-                        else
+                        if(t111==0)
                             addAnonymously();
+                        else
+                            Toast.makeText(Addpost.this,"You can't participate anonymously in a contest",Toast.LENGTH_LONG).show();
                     }
                 });
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        if(user==null){
+                            Toast.makeText(Addpost.this,"Sign In First!!",Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        if(t111==0)
+                            add();
+                        else{
+                            add_Contest();
+                        }
                     }
                 });
                 builder.show();
@@ -497,7 +506,7 @@ public class Addpost extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
     int count=0;
-    private void addAnonymously_Contest() {
+    private void add(){
         Insertion1 insertion1=new Insertion1();
         insertion1.execute();
         for(int i=0;i<myList.size();i++){
@@ -510,9 +519,98 @@ public class Addpost extends AppCompatActivity {
             if(title.equals(""))
                 title="NO TITLE";
             mLog.setTitle(title);
-            mLog.setAuthor("Anonymous");
+            mLog.setAuthor(user.getDisplayName());
             mLog.setRating((long) 0);
-            mLog.setPhoto("");
+            mLog.setPhoto(user.getPhotoUrl().toString());
+            mLog.setMyList(myList);
+            mLog.setTime(-System.currentTimeMillis());
+            DatabaseReference databaseReference1=databaseReference.child("Posts").push();
+            databaseReference1.setValue(mLog).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Toast.makeText(Addpost.this, "Upload Successful", Toast.LENGTH_LONG).show();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(Addpost.this, "Upload Failed", Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+        else {
+            for (int i = 0; i < myList.size(); i++) {
+                if (myList.get(i).getId().equals("Image")) {
+                    File f = new File(myList.get(i).getContent());
+                    Uri uri = Uri.fromFile(f);
+                    final StorageReference storageReference = FirebaseStorage.getInstance().getReference().child(Long.toString(System.currentTimeMillis()) + ".jpeg");
+                    final int finalI = i;
+                    storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri1) {
+                                    myList.get(finalI).setUri(uri1);
+                                    count--;
+                                    if (count == 0) {
+                                        PostData mLog = new PostData();
+                                        String title = editText.getText().toString();
+                                        if (title.equals(""))
+                                            title = "NO TITLE";
+                                        mLog.setAuthor(user.getDisplayName());
+                                        mLog.setTitle(title);
+                                        mLog.setMyList(myList);
+                                        mLog.setPhoto(user.getPhotoUrl().toString());
+                                        mLog.setRating((long) 0);
+                                        mLog.setTime(-System.currentTimeMillis());
+                                        DatabaseReference databaseReference1 = databaseReference.child("Posts").push();
+                                        databaseReference1.setValue(mLog).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Toast.makeText(Addpost.this, "Upload Successful", Toast.LENGTH_LONG).show();
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Toast.makeText(Addpost.this, "Upload Failed", Toast.LENGTH_LONG).show();
+                                            }
+                                        });
+                                    }
+                                }
+                            });
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(Addpost.this, "Sorry!! Failed to add Data", Toast.LENGTH_LONG).show();
+                            count=-1;
+                        }
+                    });
+                }
+                if(count==-1)
+                    break;
+            }
+        }
+        Insertion insertion=new Insertion();
+        insertion.execute();
+        onBackPressed();
+    }
+    private void add_Contest() {
+        Insertion1 insertion1=new Insertion1();
+        insertion1.execute();
+        for(int i=0;i<myList.size();i++){
+            if(myList.get(i).getId().equals("Image"))
+                count++;
+        }
+        if(count==0){
+            PostData mLog=new PostData();
+            String title=editText.getText().toString();
+            if(title.equals(""))
+                title="NO TITLE";
+            mLog.setTitle(title);
+            mLog.setAuthor(user.getDisplayName());
+            mLog.setRating((long) 0);
+            mLog.setPhoto(user.getPhotoUrl().toString());
             mLog.setMyList(myList);
             mLog.setTime(-System.currentTimeMillis());
             DatabaseReference databaseReference1=databaseReference.child("Contests").child(name).child("Posts").push();
@@ -548,8 +646,8 @@ public class Addpost extends AppCompatActivity {
                                         String title = editText.getText().toString();
                                         if (title.equals(""))
                                             title = "NO TITLE";
-                                        mLog.setAuthor("Anonymous");
-                                        mLog.setPhoto("");
+                                        mLog.setAuthor(user.getDisplayName());
+                                        mLog.setPhoto(user.getPhotoUrl().toString());
                                         mLog.setTitle(title);
                                         mLog.setMyList(myList);
                                         mLog.setRating((long) 0);
