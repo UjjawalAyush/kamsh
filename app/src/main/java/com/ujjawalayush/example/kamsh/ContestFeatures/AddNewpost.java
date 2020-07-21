@@ -1,4 +1,4 @@
-package com.ujjawalayush.example.kamsh.Fragments;
+package com.ujjawalayush.example.kamsh.ContestFeatures;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -11,23 +11,21 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
 import com.ujjawalayush.example.kamsh.Adapter.DraftAdapter;
-import com.ujjawalayush.example.kamsh.EditBlog.Addpost;
 import com.ujjawalayush.example.kamsh.DBAdapter;
 import com.ujjawalayush.example.kamsh.Data.AddpostData;
 import com.ujjawalayush.example.kamsh.Data.Drafts;
+import com.ujjawalayush.example.kamsh.EditBlog.Addpost;
 import com.ujjawalayush.example.kamsh.R;
 
 import java.io.File;
@@ -37,32 +35,39 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static android.app.Activity.RESULT_OK;
-
-public class DraftFragment extends Fragment {
-    public DraftFragment() {
-        // Required empty public constructor
-    }
-    View home;
-    Context context;
-    ArrayList<Drafts> myList=new ArrayList<>();
-    Bitmap bitmap;
+public class AddNewpost extends AppCompatActivity {
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
-    Uri uri;
-    int pos;
+    Context context;
     com.ujjawalayush.example.kamsh.Adapter.DraftAdapter draftAdapter;
-    @Nullable
+    ArrayList<Drafts> myList=new ArrayList<>();
+    Bitmap bitmap;
+    String name;
+    Uri uri;
+    Toolbar toolbar;
+    int pos;
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        home =inflater.inflate(R.layout.fragment_drafts, container, false);
-        context=home.getContext();
-        DBAdapter db=new DBAdapter(context);
-        db.open();
-        recyclerView=(RecyclerView)home.findViewById(R.id.recyclerView);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.addnewpost);
+        context=AddNewpost.this;
+        toolbar =(Toolbar)findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back_black_24dp));
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+        recyclerView=(RecyclerView)findViewById(R.id.recyclerView);
         linearLayoutManager=new LinearLayoutManager(context);
         recyclerView.setLayoutManager(linearLayoutManager);
+        DBAdapter db=new DBAdapter(context);
+        db.open();
         Cursor c=db.getAllTitles();
+        name=getIntent().getStringExtra("Name");
         c.moveToFirst();
         while(!c.isAfterLast()){
             Drafts mLog=new Drafts();
@@ -75,7 +80,6 @@ public class DraftFragment extends Fragment {
         draftAdapter = new DraftAdapter(myList);
         recyclerView.setAdapter(draftAdapter);
         callListener();
-        return home;
     }
     public String getFileExtension(Uri uri1){
         ContentResolver cR=context.getContentResolver();
@@ -142,8 +146,9 @@ public class DraftFragment extends Fragment {
                 bundle.putParcelableArrayList("ARRAYLIST",arrayList);
                 bundle.putString("TITLE",myList.get(position).getTitle());
                 bundle.putString("VALUES",myList.get(position).getPostion());
-                bundle.putString("111","11111111");
-                data.putExtra("extras",bundle);
+                bundle.putString("111","111");
+                bundle.putString("Name",name);
+                data.putExtra("extras2",bundle);
                 startActivity(data);
                 db.close();
             }
@@ -151,24 +156,24 @@ public class DraftFragment extends Fragment {
             @Override
             public void onViewClick(final int position) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.Theme_AppCompat_DayNight_Dialog);
-                    builder.setTitle("Are you sure that you wanna change the Picture ?");
-                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Intent intent = new Intent();
-                            intent.setType("image/*");
-                            intent.setAction(Intent.ACTION_GET_CONTENT);
-                            pos = position;
-                            startActivityForResult(intent,1);
-                        }
-                    });
-                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                        }
-                    });
-                    builder.show();
+                builder.setTitle("Are you sure that you wanna change the Picture ?");
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent();
+                        intent.setType("image/*");
+                        intent.setAction(Intent.ACTION_GET_CONTENT);
+                        pos = position;
+                        startActivityForResult(intent,1);
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                builder.show();
             }
         });
     }
@@ -198,5 +203,14 @@ public class DraftFragment extends Fragment {
             }
         }
 
+    }
+
+    public void onClick(View view) {
+        Intent data=new Intent(context,Addpost.class);
+        Bundle extras=new Bundle();
+        extras.putString("111","111");
+        extras.putString("Name",name);
+        data.putExtra("extras1",extras);
+        startActivity(data);
     }
 }

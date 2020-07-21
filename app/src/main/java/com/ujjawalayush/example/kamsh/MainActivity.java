@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     Fragment fragment_home;
-    Fragment fragment;
     Fragment fragment_drafts,fragment_notification,fragment_contest;
     FragmentManager fm;
     @Override
@@ -54,7 +53,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragment_drafts=new DraftFragment();
         fragment_notification=new NotificationFragment();
         fragment_contest=new ContestFragment();
-        fragment=fragment_home;
         fm = getSupportFragmentManager();
         fm.beginTransaction().add(R.id.frame_container,fragment_drafts, "4").hide(fragment_drafts).commit();
         fm.beginTransaction().add(R.id.frame_container,fragment_notification, "3").hide(fragment_notification).commit();
@@ -66,27 +64,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
             switch(menuItem.getItemId()){
                 case R.id.home:
-                    fm.beginTransaction().hide(fragment).show(fragment_home).commit();
-                    fragment = fragment_home;
+                    fm.beginTransaction().show(fragment_home).hide(fragment_drafts).hide(fragment_contest).hide(fragment_notification).commit();
                     return true;
                 case R.id.posts:
                     Intent data=new Intent(MainActivity.this,Addpost.class);
                     startActivity(data);
                     return true;
                 case R.id.notifications:
-                    fm.beginTransaction().hide(fragment).show(fragment_notification).commit();
-                    fragment = fragment_notification;
+                    fm.beginTransaction().hide(fragment_home).hide(fragment_drafts).hide(fragment_contest).show(fragment_notification).commit();
                     return true;
                 case R.id.drafts:
-                    fm.beginTransaction().hide(fragment).show(fragment_drafts).commit();
-                    fragment = fragment_drafts;
+                    fragment_drafts=new DraftFragment();
+                    fm.beginTransaction().add(R.id.frame_container,fragment_drafts, "4").hide(fragment_home).show(fragment_drafts).hide(fragment_contest).hide(fragment_notification).commit();
                     return true;
                 case R.id.contest:
-                    fm.beginTransaction().hide(fragment).show(fragment_contest).commit();
-                    fragment = fragment_contest;
+                    fm.beginTransaction().hide(fragment_home).hide(fragment_drafts).show(fragment_contest).hide(fragment_notification).commit();
                     return true;
             }
-            return false;
+            return true;
         }
     };
 

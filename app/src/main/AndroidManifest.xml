@@ -75,6 +75,13 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".ContestFeatures.AddNewpost">
+            <intent-filter>
+                <action android:name="com.ujjawalayush.example.kamsh.addnewpost" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
