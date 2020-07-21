@@ -42,8 +42,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -507,6 +510,7 @@ public class Addpost extends AppCompatActivity {
     }
     int count=0;
     private void add(){
+
         Insertion1 insertion1=new Insertion1();
         insertion1.execute();
         for(int i=0;i<myList.size();i++){
@@ -596,93 +600,111 @@ public class Addpost extends AppCompatActivity {
         onBackPressed();
     }
     private void add_Contest() {
-        Insertion1 insertion1=new Insertion1();
-        insertion1.execute();
-        for(int i=0;i<myList.size();i++){
-            if(myList.get(i).getId().equals("Image"))
-                count++;
-        }
-        if(count==0){
-            PostData mLog=new PostData();
-            String title=editText.getText().toString();
-            if(title.equals(""))
-                title="NO TITLE";
-            mLog.setTitle(title);
-            mLog.setAuthor(user.getDisplayName());
-            mLog.setRating((long) 0);
-            mLog.setPhoto(user.getPhotoUrl().toString());
-            mLog.setMyList(myList);
-            mLog.setTime(-System.currentTimeMillis());
-            DatabaseReference databaseReference1=databaseReference.child("Contests").child(name).child("Posts").push();
-            databaseReference1.setValue(mLog).addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
-                    Toast.makeText(Addpost.this, "Upload Successful", Toast.LENGTH_LONG).show();
+        DatabaseReference databaseReference3=databaseReference.child("Contests").child(name).child("leaderboard");
+        databaseReference3.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+                    Toast.makeText(Addpost.this,dataSnapshot1.getKey(),Toast.LENGTH_LONG).show();
+                    if(dataSnapshot1.getKey().equals(user.getDisplayName())){
+                        Toast.makeText(Addpost.this,"Sorry!! Limit exceeded",Toast.LENGTH_LONG).show();
+                        return;
+                    }
                 }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(Addpost.this, "Upload Failed", Toast.LENGTH_LONG).show();
+                Insertion1 insertion1=new Insertion1();
+                insertion1.execute();
+                for(int i=0;i<myList.size();i++){
+                    if(myList.get(i).getId().equals("Image"))
+                        count++;
                 }
-            });
-        }
-        else {
-            for (int i = 0; i < myList.size(); i++) {
-                if (myList.get(i).getId().equals("Image")) {
-                    File f = new File(myList.get(i).getContent());
-                    Uri uri = Uri.fromFile(f);
-                    final StorageReference storageReference = FirebaseStorage.getInstance().getReference().child(Long.toString(System.currentTimeMillis()) + ".jpeg");
-                    final int finalI = i;
-                    storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                if(count==0){
+                    PostData mLog=new PostData();
+                    String title=editText.getText().toString();
+                    if(title.equals(""))
+                        title="NO TITLE";
+                    mLog.setTitle(title);
+                    mLog.setAuthor(user.getDisplayName());
+                    mLog.setRating((long) 0);
+                    mLog.setPhoto(user.getPhotoUrl().toString());
+                    mLog.setMyList(myList);
+                    mLog.setTime(-System.currentTimeMillis());
+                    DatabaseReference databaseReference1=databaseReference.child("Contests").child(name).child("Posts").push();
+                    databaseReference1.setValue(mLog).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri1) {
-                                    myList.get(finalI).setUri(uri1);
-                                    count--;
-                                    if (count == 0) {
-                                        PostData mLog = new PostData();
-                                        String title = editText.getText().toString();
-                                        if (title.equals(""))
-                                            title = "NO TITLE";
-                                        mLog.setAuthor(user.getDisplayName());
-                                        mLog.setPhoto(user.getPhotoUrl().toString());
-                                        mLog.setTitle(title);
-                                        mLog.setMyList(myList);
-                                        mLog.setRating((long) 0);
-                                        mLog.setTime(-System.currentTimeMillis());
-                                        DatabaseReference databaseReference1 = databaseReference.child("Contests").child(name).child("Posts").push();
-                                        databaseReference1.setValue(mLog).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                Toast.makeText(Addpost.this, "Upload Successful", Toast.LENGTH_LONG).show();
-                                            }
-                                        }).addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                Toast.makeText(Addpost.this, "Upload Failed", Toast.LENGTH_LONG).show();
-                                            }
-                                        });
-                                    }
-                                }
-                            });
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(Addpost.this, "Upload Successful", Toast.LENGTH_LONG).show();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(Addpost.this, "Sorry!! Failed to add Data", Toast.LENGTH_LONG).show();
-                            count=-1;
+                            Toast.makeText(Addpost.this, "Upload Failed", Toast.LENGTH_LONG).show();
                         }
                     });
                 }
-                if(count==-1)
-                    break;
+                else {
+                    for (int i = 0; i < myList.size(); i++) {
+                        if (myList.get(i).getId().equals("Image")) {
+                            File f = new File(myList.get(i).getContent());
+                            Uri uri = Uri.fromFile(f);
+                            final StorageReference storageReference = FirebaseStorage.getInstance().getReference().child(Long.toString(System.currentTimeMillis()) + ".jpeg");
+                            final int finalI = i;
+                            storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                    storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                        @Override
+                                        public void onSuccess(Uri uri1) {
+                                            myList.get(finalI).setUri(uri1);
+                                            count--;
+                                            if (count == 0) {
+                                                PostData mLog = new PostData();
+                                                String title = editText.getText().toString();
+                                                if (title.equals(""))
+                                                    title = "NO TITLE";
+                                                mLog.setAuthor(user.getDisplayName());
+                                                mLog.setPhoto(user.getPhotoUrl().toString());
+                                                mLog.setTitle(title);
+                                                mLog.setMyList(myList);
+                                                mLog.setRating((long) 0);
+                                                mLog.setTime(-System.currentTimeMillis());
+                                                DatabaseReference databaseReference1 = databaseReference.child("Contests").child(name).child("Posts").push();
+                                                databaseReference1.setValue(mLog).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Toast.makeText(Addpost.this, "Upload Successful", Toast.LENGTH_LONG).show();
+                                                    }
+                                                }).addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Toast.makeText(Addpost.this, "Upload Failed", Toast.LENGTH_LONG).show();
+                                                    }
+                                                });
+                                            }
+                                        }
+                                    });
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(Addpost.this, "Sorry!! Failed to add Data", Toast.LENGTH_LONG).show();
+                                    count=-1;
+                                }
+                            });
+                        }
+                        if(count==-1)
+                            break;
+                    }
+                }
+                Insertion insertion=new Insertion();
+                insertion.execute();
+                onBackPressed();
             }
-        }
-        Insertion insertion=new Insertion();
-        insertion.execute();
-        onBackPressed();
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
     private void addAnonymously() {
         Insertion1 insertion1=new Insertion1();

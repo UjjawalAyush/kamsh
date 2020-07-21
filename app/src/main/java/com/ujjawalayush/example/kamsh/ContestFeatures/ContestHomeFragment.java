@@ -91,21 +91,35 @@ public class ContestHomeFragment extends Fragment {
                     Toast.makeText(context,"Sign In First!!",Toast.LENGTH_LONG).show();
                     return;
                 }
-                DatabaseReference databaseReference1=databaseReference.child("Contests").child(name).child("Posts").child("Rating").child(arrayList.get(position).getKey());
+                DatabaseReference databaseReference1=databaseReference.child("Contests").child(name).child("Rating").child(arrayList.get(position).getKey());
                 databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         int t=0;
                         for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
-                            if(dataSnapshot1.getValue() == user.getUid())
+                            if(dataSnapshot1.getValue().toString().equals( user.getUid()))
                                 t=1;
                         }
                         if(t==0){
-                            Long rating=arrayList.get(position).getRating();
+                            final Long rating=arrayList.get(position).getRating();
                             DatabaseReference databaseReference2=databaseReference.child("Contests").child(name).child("Posts").child(arrayList.get(position).getKey());
                             databaseReference2.child("rating").setValue(rating+1);
-                            databaseReference2=databaseReference.child("Contests").child(name).child("Posts").child("Rating").child(arrayList.get(position).getKey());
+                            databaseReference2=databaseReference.child("Contests").child(name).child("Rating").child(arrayList.get(position).getKey());
                             databaseReference2.push().setValue(user.getUid());
+                            databaseReference2=databaseReference.child("Contests").child(name).child("Posts").child(arrayList.get(position).getKey());
+                            databaseReference2.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    String author=dataSnapshot.child("author").getValue().toString();
+                                    final DatabaseReference databaseReference3=databaseReference.child("Contests").child(name).child("leaderboard").child(author);
+                                    databaseReference3.setValue(rating+1);
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
                         }
                         else{
                             Toast.makeText(context,"Sorry You have already voted!!",Toast.LENGTH_LONG).show();
@@ -131,15 +145,29 @@ public class ContestHomeFragment extends Fragment {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         int t=0;
                         for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
-                            if(dataSnapshot1.getValue() == user.getUid())
+                            if(dataSnapshot1.getValue().toString().equals( user.getUid()))
                                 t=1;
                         }
                         if(t==0){
-                            Long rating=arrayList.get(position).getRating();
+                            final Long rating=arrayList.get(position).getRating();
                             DatabaseReference databaseReference2=databaseReference.child("Contests").child(name).child("Posts").child(arrayList.get(position).getKey());
                             databaseReference2.child("rating").setValue(rating-1);
-                            databaseReference2=databaseReference.child("Contests").child(name).child("Posts").child("Rating").child(arrayList.get(position).getKey());
+                            databaseReference2=databaseReference.child("Contests").child(name).child("Rating").child(arrayList.get(position).getKey());
                             databaseReference2.push().setValue(user.getUid());
+                            databaseReference2=databaseReference.child("Contests").child(name).child("Posts").child(arrayList.get(position).getKey());
+                            databaseReference2.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    String author=dataSnapshot.child("author").getValue().toString();
+                                    final DatabaseReference databaseReference3=databaseReference.child("Contests").child(name).child("leaderboard").child(author);
+                                    databaseReference3.setValue(rating-1);
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
                         }
                         else{
                             Toast.makeText(context,"Sorry You have already voted!!",Toast.LENGTH_LONG).show();
