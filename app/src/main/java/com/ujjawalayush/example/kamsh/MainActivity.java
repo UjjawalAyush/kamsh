@@ -19,6 +19,9 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 import com.ujjawalayush.example.kamsh.Authentication.LogIn;
 import com.ujjawalayush.example.kamsh.ContestFeatures.Host;
 import com.ujjawalayush.example.kamsh.EditBlog.Addpost;
@@ -53,6 +56,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         View header=navigationView.getHeaderView(0);
         final TextView textView=header.findViewById(R.id.name);
         final com.mikhaellopez.circularimageview.CircularImageView circularImageView=header.findViewById(R.id.circularImageView);
+        if(user!=null) {
+            Picasso.get().load(user.getPhotoUrl()).fit().into(circularImageView);
+            textView.setText(String.format("Welcome %s", user.getDisplayName()));
+        }
         navigationView.setNavigationItemSelectedListener(this);
         drawerLayout= (DrawerLayout)findViewById(R.id.drawer_layout);
         actionBarDrawerToggle=new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.open,R.string.close);
