@@ -20,6 +20,7 @@ import com.ujjawalayush.example.kamsh.R;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import static android.view.View.GONE;
@@ -31,7 +32,7 @@ public class ContestAdapter extends RecyclerView.Adapter<ContestAdapter.Recycler
         myList = myList1;
     }
     public interface OnItemClickListener{
-        void onViewClick(int position);
+        void onViewClick(int position) throws ParseException;
     }
     public void setOnItemClickListener(OnItemClickListener Listener){
         mListener=Listener;
@@ -72,7 +73,11 @@ public class ContestAdapter extends RecyclerView.Adapter<ContestAdapter.Recycler
             relativeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onViewClick(getAdapterPosition());
+                    try {
+                        listener.onViewClick(getAdapterPosition());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
         }

@@ -44,6 +44,7 @@ public class AddNewpost extends AppCompatActivity {
     Bitmap bitmap;
     String name;
     Uri uri;
+    Long current;
     Toolbar toolbar;
     int pos;
 
@@ -67,7 +68,8 @@ public class AddNewpost extends AppCompatActivity {
         DBAdapter db=new DBAdapter(context);
         db.open();
         Cursor c=db.getAllTitles();
-        name=getIntent().getStringExtra("Name");
+        name=getIntent().getBundleExtra("extras").getString("Name");
+        current=getIntent().getBundleExtra("extras").getLong("Time");
         c.moveToFirst();
         while(!c.isAfterLast()){
             Drafts mLog=new Drafts();
@@ -148,6 +150,7 @@ public class AddNewpost extends AppCompatActivity {
                 bundle.putString("VALUES",myList.get(position).getPostion());
                 bundle.putString("111","111");
                 bundle.putString("Name",name);
+                bundle.putLong("Time",current);
                 data.putExtra("extras2",bundle);
                 startActivity(data);
                 db.close();
@@ -210,6 +213,7 @@ public class AddNewpost extends AppCompatActivity {
         Bundle extras=new Bundle();
         extras.putString("111","111");
         extras.putString("Name",name);
+        extras.putLong("Time",current);
         data.putExtra("extras1",extras);
         startActivity(data);
     }

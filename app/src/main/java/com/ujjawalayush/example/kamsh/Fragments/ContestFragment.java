@@ -144,10 +144,11 @@ public class ContestFragment extends Fragment {
         });
         pastContest.setOnItemClickListener(new ContestAdapter.OnItemClickListener() {
             @Override
-            public void onViewClick(int position) {
+            public void onViewClick(int position) throws ParseException {
                 Intent data =new Intent(context,Contest.class);
                 Bundle extras=new Bundle();
                 extras.putString("Type","1");
+                extras.putLong("Time",convert_to_milli(myList.get(position).getEnddate(),myList.get(position).getEndtime()));
                 extras.putString("Name",pastList.get(position).getName());
                 data.putExtra("extras",extras);
                 startActivity(data);
@@ -155,10 +156,11 @@ public class ContestFragment extends Fragment {
         });
         futureContest.setOnItemClickListener(new ContestAdapter.OnItemClickListener() {
             @Override
-            public void onViewClick(int position) {
+            public void onViewClick(int position) throws ParseException {
                 Intent data =new Intent(context,Contest.class);
                 Bundle extras=new Bundle();
                 extras.putString("Type","3");
+                extras.putLong("Time",convert_to_milli(myList.get(position).getEnddate(),myList.get(position).getEndtime()));
                 extras.putString("Name",futureList.get(position).getName());
                 data.putExtra("extras",extras);
                 startActivity(data);
@@ -166,10 +168,11 @@ public class ContestFragment extends Fragment {
         });
         activeContest.setOnItemClickListener(new ContestAdapter.OnItemClickListener() {
             @Override
-            public void onViewClick(int position) {
+            public void onViewClick(int position) throws ParseException {
                 Intent data =new Intent(context,Contest.class);
                 Bundle extras=new Bundle();
                 extras.putString("Type","2");
+                extras.putLong("Time",convert_to_milli(myList.get(position).getEnddate(),myList.get(position).getEndtime()));
                 extras.putString("Name",activeList.get(position).getName());
                 data.putExtra("extras",extras);
                 startActivity(data);

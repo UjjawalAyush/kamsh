@@ -77,6 +77,7 @@ public class Addpost extends AppCompatActivity {
     int para=0;
     String PREVIOUS_TITLE="",header;
     RecyclerView recyclerView;
+    Long contest_end=(long)0;
     int t111=0;
     String name;
     ArrayList<AddpostData> myList,arrayList=new ArrayList<>();
@@ -259,6 +260,7 @@ public class Addpost extends AppCompatActivity {
             myList = getIntent().getBundleExtra("extras2").getParcelableArrayList("ARRAYLIST");
             PREVIOUS_TITLE = getIntent().getBundleExtra("extras2").getString("TITLE");
             editText.setText(PREVIOUS_TITLE);
+            contest_end=getIntent().getBundleExtra("extras2").getLong("Time");
             value=getIntent().getBundleExtra("extras2").getString("VALUES");
             if(getIntent().getBundleExtra("extras2").getString("111").equals("111")) {
                 t111=1;
@@ -267,6 +269,7 @@ public class Addpost extends AppCompatActivity {
         }
         if(getIntent().hasExtra("extras1")) {
             t111 = 1;
+            contest_end=getIntent().getBundleExtra("extras1").getLong("Time");
             name = getIntent().getBundleExtra("extras1").getString("Name");
         }
         addPostAdapter = new AddPostAdapter(myList);
@@ -600,6 +603,11 @@ public class Addpost extends AppCompatActivity {
         onBackPressed();
     }
     private void add_Contest() {
+        Long c=System.currentTimeMillis();
+        if(contest_end<c){
+            Toast.makeText(Addpost.this,"Sorry!! Contest Over!!",Toast.LENGTH_LONG).show();
+            return;
+        }
         DatabaseReference databaseReference3=databaseReference.child("Contests").child(name).child("leaderboard");
         databaseReference3.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

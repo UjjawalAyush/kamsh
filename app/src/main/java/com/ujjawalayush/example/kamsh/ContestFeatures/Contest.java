@@ -25,6 +25,7 @@ public class Contest extends AppCompatActivity {
     Toolbar toolbar;
     Bundle extras;
     Fragment fragment_home;
+    Long current;
     Fragment fragment;
     Fragment fragment_contest;
     String name;
@@ -37,6 +38,7 @@ public class Contest extends AppCompatActivity {
         toolbar=(Toolbar)findViewById(R.id.toolbar);
         toolbar.setTitle(extras.getString("Name"));
         name=extras.getString("Name");
+        current=extras.getLong("Time");
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back_black_24dp));
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -68,7 +70,10 @@ public class Contest extends AppCompatActivity {
                 case R.id.posts:
                     if(extras.getString("Type").equals("2")) {
                         Intent data = new Intent(Contest.this, AddNewpost.class);
-                        data.putExtra("Name", name);
+                        Bundle extras=new Bundle();
+                        extras.putString("Name", name);
+                        extras.putLong("Time", current);
+                        data.putExtra("extras",extras);
                         startActivity(data);
                     }
                     else if(extras.getString("Type").equals("1"))
