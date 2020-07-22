@@ -15,4 +15,6 @@
     <string name="date">hh:mm:yyyy\\nhh:mm</string>
     <string name="forgot_password">Forgot Password?</string>
     <string name="new_user_sign_up_here">New User?? Sign Up Here!!</string>
+    <string name="username">Username</string>
+    <string name="score">Score</string>
 </resources>

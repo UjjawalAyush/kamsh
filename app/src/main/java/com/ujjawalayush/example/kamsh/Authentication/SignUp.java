@@ -19,6 +19,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
@@ -68,6 +69,8 @@ public class SignUp extends AppCompatActivity {
     String email, password;
     String user_id, b;
     FirebaseUser user;
+    Toolbar toolbar;
+
     CircularImageView circularImageView;
     DatabaseReference databaseReference;
     Query UsernameQuery, NumberQuery,EmailQuery;
@@ -81,6 +84,16 @@ public class SignUp extends AppCompatActivity {
         editText2=(EditText )findViewById(R.id.name);
         editText3=(EditText)findViewById(R.id.password);
         username=(EditText)findViewById(R.id.username);
+        toolbar=(Toolbar)findViewById(R.id.toolbar);
+        toolbar.setTitle("Sign Up");
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back_black_24dp));
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         number=(EditText)findViewById(R.id.phone);
         progressDialog = new ProgressDialog(this);
         firebaseAuth = FirebaseAuth.getInstance();
