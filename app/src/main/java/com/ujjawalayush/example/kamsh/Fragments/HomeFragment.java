@@ -95,7 +95,7 @@ public class HomeFragment extends Fragment {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         int t=0;
                         for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
-                            if(dataSnapshot1.getValue() == user.getUid())
+                            if(dataSnapshot1.getValue().toString().equals( user.getUid()))
                                 t=1;
                         }
                         if(t==0){
